@@ -17,11 +17,9 @@
             <div class="col-12">
                 <table class="table border table-hover">
                     <thead>
-                        <tr>
-                        </tr>
                     <tbody>
                         <tr>
-                            <td class="bold">Fecha:</td>
+                            <td>Fecha:</td>
                             <td>07/10/2024</td>
                         </tr>
                         <tr>
