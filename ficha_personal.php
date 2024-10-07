@@ -21,7 +21,7 @@
                         </tr>
                     <tbody>
                         <tr>
-                            <td>Fecha:</td>
+                            <td class="bold">Fecha:</td>
                             <td>07/10/2024</td>
                         </tr>
                         <tr>
