@@ -6,14 +6,24 @@
     <title>Ficha personal</title>
 </head>
 <body>
-    <table>
-        <thead class="text-center">
+    <div class="row">
+        <div class="col-12 text-center">
             <h1>Ficha personal</h1>
-        </thead>
-        <th class="border">
-            <td></td>
-        </th>
-    </table>
-    
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="border">
+                <tbody>
+                    <tr>
+                        <td>Fecha:</td>
+                        <td>Nombre y apellido:</td>
+                        <td>Edad:</td>
+                        <td>Películas favoritas:</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
