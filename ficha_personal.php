@@ -21,26 +21,20 @@
                         </tr>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td><img src="imagenes/impresora.jpg" alt="impresora" height="100px"></td>
-                            <td>Impresora HP1102w</td>
-                            <td>20</td>
+                            <td>Fecha:</td>
+                            <td>07/10/2024</td>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td><img src="imagenes/pizarra_digital.png" alt="pizarra" height="100px"></td>
-                            <td>Pizarra digital</td>
+                            <td>Nombre y Apellido:</td>
+                            <td>Matías Sidoti Knap</td>
+                        </tr>
+                        <tr>
+                            <td>Edad:</td>
                             <td>25</td>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td><img src="imagenes/notebook.jpg" alt="notebook" height="100px"></td>
-                            <td>Notebook 15"</td>
-                            <td>15</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" class="text-end">TOTAL</td>
-                            <td>60 ítems</td>
+                            <td>Películas favoritas:</td>
+                            <td>Before Sunrise<br>Paterson<br>Before Sunset</td>
                         </tr>
                     </tbody>
                     </thead>
