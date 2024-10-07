@@ -16,7 +16,6 @@
         <div class="row">
             <div class="col-12">
                 <table class="table border table-hover">
-                    <thead>
                     <tbody>
                         <tr>
                             <td>Fecha:</td>
@@ -35,7 +34,6 @@
                             <td>Before Sunrise<br>Paterson<br>Before Sunset</td>
                         </tr>
                     </tbody>
-                    </thead>
                 </table>
             </div>
         </div>
