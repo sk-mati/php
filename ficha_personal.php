@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha Personal</title>
+    <title>Ficha personal</title>
 </head>
 <body>
     <table>
-        <thead>
-            <h1>Ficha Personal</h1>
+        <thead class="text-center">
+            <h1>Ficha personal</h1>
         </thead>
+        <th class="border">
+            <td></td>
+        </th>
     </table>
     
 </body>
