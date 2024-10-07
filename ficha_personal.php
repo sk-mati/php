@@ -14,6 +14,7 @@
     <div class="row">
         <div class="col-12">
             <table class="border">
+                <thead>
                 <tbody>
                     <tr>
                         <td>Fecha:</td>
@@ -22,6 +23,7 @@
                         <td>Películas favoritas:</td>
                     </tr>
                 </tbody>
+                </thead>
             </table>
         </div>
     </div>
