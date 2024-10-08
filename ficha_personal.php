@@ -1,3 +1,12 @@
+<?php
+
+date_default_timezone_set("America/Argentina/Buenos_Aires");
+
+$nombre = "Matías Sidoti Knap";
+$edad = 25;
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,26 +25,23 @@
         <div class="row">
             <div class="col-12">
                 <table class="table border table-hover">
-                    <tbody>
                         <tr>
-                            <td>Fecha:</td>
-                            <td>07/10/2024</td>
+                            <th>Fecha:</th>
+                            <td><?php echo date("d/m/Y"); ?></td>
                         </tr>
                         <tr>
-                            <td>Nombre y Apellido:</td>
-                            <td>Matías Sidoti Knap</td>
+                            <th>Nombre y Apellido:</th>
+                            <td><?php echo $nombre; ?></td>
                         </tr>
                         <tr>
-                            <td>Edad:</td>
-                            <td>25</td>
+                            <th>Edad:</th>
+                            <td><?php echo $edad; ?></td>
                         </tr>
                         <tr>
-                            <td>Películas favoritas:</td>
+                            <th>Películas favoritas:</th>
                             <td>Before Sunrise<br>Paterson<br>Before Sunset</td>
                         </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
-
     </main>
