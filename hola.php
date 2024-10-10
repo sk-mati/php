@@ -9,7 +9,7 @@
         <?php
         
         echo "Hola mundo <br>";
-        echo date("d/m/Y <br>"); /*Y muestra el año completo*/
+        echo date("d/m/Y"); /*Y muestra el año completo*/
         //echo date("d/m/y"); /*y muestra dos dígitos del año*/
 
         ?>

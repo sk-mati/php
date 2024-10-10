@@ -1,10 +1,20 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 date_default_timezone_set("America/Argentina/Buenos_Aires");
 
 $nombre = "Matías Sidoti Knap";
-$edad = 25;
+$edad = 25; 
+$aPeliculas = array("Before Sunrise", "Paterson", "Before Sunset");
 
+//print_r
+//var_dump
+//Analizan el contenido de las variables
+
+// $aPeliculas = ["Before Sunrise", "Paterson", "Before Sunset"]; Otra forma
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +49,10 @@ $edad = 25;
                         </tr>
                         <tr>
                             <th>Películas favoritas:</th>
-                            <td>Before Sunrise<br>Paterson<br>Before Sunset</td>
+                            <td><?php echo $aPeliculas[0]; ?><br>
+                                <?php echo $aPeliculas[1]; ?><br>
+                                <?php echo $aPeliculas[2]; ?>
+                                </td>
                         </tr>
                 </table>
             </div>
