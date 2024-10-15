@@ -1,0 +1,202 @@
+/* Comentarios en CSS */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0px;
+}
+
+nav {
+  display: block;
+  text-align: center;
+  background-color: red;
+}
+
+nav a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ffffff;
+  padding: 0px 50px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 14px 0px;
+}
+
+nav li {
+  display: inline;
+}
+
+main {
+  margin: 20px 10%;
+}
+
+h1 {
+  font-size: 36px;
+  color: red;
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+  color: gray;
+}
+
+.producto {
+  background-color: #eee;
+  width: 285px;
+  display: inline-block;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px;
+}
+
+.producto h3 {
+  color: red;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.producto span {
+  color: green;
+  font-weight: 600;
+}
+
+.producto img {
+  height: 130px;
+  margin: auto;
+  display: block;
+}
+
+p {
+  font-size: 16px;
+  font-style: italic;
+}
+
+#video {
+  background-color: #eee;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+footer {
+  width: max-content;
+  margin: auto;
+  margin-bottom: 40px;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+footer i {
+  font-size: 35px;
+  border: 1px solid;
+  height: 48px;
+  width: 58px;
+  text-align: center;
+  padding: 10px 0 0 0;
+  border-radius: 80px;
+  margin: 0 15px;
+  color: red;
+}
+
+.formato {
+  text-align: center;
+  color: red;
+}
+
+/* Contacto */
+
+form {
+  margin: auto;
+  display: block;
+  width: 600px;
+
+}
+
+form div {
+  margin-bottom: 5px;
+}
+
+form input[type=text],
+form input[type=date],
+form input[type=tel],
+form input[type=email],
+form textarea,
+form select {
+  width: 100%;
+  border: 1px solid red;
+  border-radius: 8px;
+  height: 22px;
+  display: block;
+}
+
+form textarea {
+  height: 100px;
+}
+
+textarea {
+  resize: none;
+}
+
+input:focus,
+textarea:focus {
+  background-color: #eee;
+}
+
+button {
+  background-color: red;
+  color: white;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: white;
+  color: red;
+  cursor: pointer;
+  /*Aparece la manito selectora al posarse en el botón*/
+}
+
+form button {
+  padding: 10px 20px;
+  border: 1px solid red;
+  margin: auto;
+  display: block;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 460px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 14px;
+  }
+
+  p {
+    font-size: 12px;
+  }
+
+  main {
+    margin: 10px 2%;
+  }
+
+  #video iframe {
+    width: 100%;
+    height: 300px;
+  }
+}
