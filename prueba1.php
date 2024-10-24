@@ -221,3 +221,4 @@ function saludar4($nombre = "", $apellido = "") {
 echo saludar4("Juan") . "<br>";
 echo saludar4("Ana", "Valle") . "<br>";
 echo saludar4("");
+?>
