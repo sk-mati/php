@@ -18,17 +18,62 @@ if(file_exists("archivo.txt")) {
     $aClientes = array();
 }
 
+$pos = isset($_GET["pos"]) && $_GET["pos"] >= 0 ? $_GET["pos"] : "";
+
 if($_POST) {
 
     $documento = trim($_POST["txtDocumento"]);
     $nombre = trim($_POST["txtNombre"]);
     $telefono = trim($_POST["txtTelefono"]);
     $correo = trim($_POST["txtCorreo"]);
+    $nombreImagen = "";
 
-    $aClientes[] = array("documento" => $documento,
-                        "nombre" => $nombre,
-                        "telefono" => $telefono,
-                        "correo" => $correo);
+    if ($pos >= 0) {
+
+        if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) {
+            $nombreAleatorio = date("Ymdhmsi");
+            $archivo_tmp = $_FILES["archivo"]["tmp_name"];
+            $extension = strtolower(pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION));
+            if ($extension == "jpg" || $extension == "jpeg" || $extension == "png") {
+                $nombreImagen = "$nombreAleatorio.$extension";
+                move_uploaded_file($archivo_tmp, "imagenes/$nombreImagen");
+            }
+
+            //Elimino la imagen anterior
+            if ($aClientes[$pos]["imagen"] != "" && file_exists("imagenes/" . $aClientes[$pos]["imagen"])) {
+                unlink("imagenes/" . $aClientes[$pos]["imagen"]);
+        }
+        } else {
+            //Mantengo el nombreImagen que tenía anteriormente
+            $nombreImagen = $aClientes[$pos]["imagen"];
+        }
+
+        //actualizar
+        $aClientes[$pos] = array("documento" => $documento,
+                                "nombre" => $nombre,
+                                "telefono" => $telefono,
+                                "correo" => $correo,
+                                "imagen" => $nombreImagen);
+
+    } else {
+
+        if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) {
+            $nombreAleatorio = date("Ymdhmsi");
+            $archivo_tmp = $_FILES["archivo"]["tmp_name"];
+            $extension = strtolower(pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION));
+            if ($extension == "jpg" || $extension == "jpeg" || $extension == "png") {
+                $nombreImagen = "$nombreAleatorio.$extension";    
+                move_uploaded_file($archivo_tmp, "imagenes/$nombreImagen");
+            }
+        }
+
+        //insertar
+        $aClientes[] = array("documento" => $documento,
+                            "nombre" => $nombre,
+                            "telefono" => $telefono,
+                            "correo" => $correo,
+                            "imagen" => $nombreImagen);
+    }
 
     //Convierto el array aClientes a jsonClientes
     $jsonClientes = json_encode($aClientes);
@@ -37,13 +82,17 @@ if($_POST) {
     file_put_contents("archivo.txt", $jsonClientes);
 }
 
-if(isset($_GET["do"]) && $_GET["do"] == "editar") {
-    $pos = isset($_GET["pos"]) && $_GET["pos"] >= 0? $_GET[$pos]:"";
+if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
+    //Elimino del array aClientes la posición a borrar con unset()
+    unset($aClientes[$pos]);
+    //Convierto el array de clientes a jsonClientes
+    $jsonClientes = json_encode($aClientes);
+    //Almaceno el string jsonClientes en el "archivo.txt"
+    file_put_contents("archivo.txt", $jsonClientes);
 
+    header("Location: index.php");
 }
-if(isset($_GET["do"]) && $_GET["do"] == "eliminar") {
 
-}
 ?>
 
 <!DOCTYPE html>
@@ -68,22 +117,22 @@ if(isset($_GET["do"]) && $_GET["do"] == "eliminar") {
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div>
                         <label for="txtDocumento">Documento: *</label>
-                        <input type="text" name="txtDocumento" id="txtDocumento" class="form-control" >
+                        <input type="text" name="txtDocumento" id="txtDocumento" class="form-control" required value="<?php echo isset($aClientes[$pos])? $aClientes[$pos]["documento"]: ""; ?>">
                     </div>
                     <div>
                         <label for="txtNombre">Nombre: *</label>
-                        <input type="text" name="txtNombre" id="txtNombre" class="form-control">
+                        <input type="text" name="txtNombre" id="txtNombre" class="form-control" required value="<?php echo isset($aClientes[$pos])? $aClientes[$pos]["nombre"]: ""; ?>">
                     </div>
                     <div>
                         <label for="txtTelefono">Teléfono: *</label>
-                        <input type="text" name="txtTelefono" id="txtTelefono" class="form-control">
+                        <input type="text" name="txtTelefono" id="txtTelefono" class="form-control" required value="<?php echo isset($aClientes[$pos])? $aClientes[$pos]["telefono"]: ""; ?>">
                     </div>
                     <div>
                         <label for="txtCorreo">Correo: *</label>
-                        <input type="email" name="txtCorreo" id="txtCorreo" class="form-control">
+                        <input type="email" name="txtCorreo" id="txtCorreo" class="form-control" required value="<?php echo isset($aClientes[$pos])? $aClientes[$pos]["correo"]: ""; ?>">
                     </div>
                     <div>
-                        <p>Archivo adjunto <input type="file" name="archivo1" id="archivo1" accept=".jpg, .jpeg, .png"></p>
+                        <p>Archivo adjunto <input type="file" name="archivo" id="archivo" accept=".jpg, .jpeg, .png"></p>
                         <p>Archivos admitidos: .jpg, .jpeg, .png</p>
                     </div>
                     <div>
@@ -104,9 +153,13 @@ if(isset($_GET["do"]) && $_GET["do"] == "eliminar") {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($aClientes as $pos => $cliente): ?>
+                        <?php foreach ($aClientes as $pos => $cliente): ?>
                         <tr>
-                            <td></td>
+                            <td>
+                                <?php if ($cliente["imagen"] != ""): ?>
+                                    <img src="imagenes/<?php echo $cliente["imagen"]; ?>" class="img-thumbnail">
+                                <?php endif; ?> 
+                            </td>
                             <td><?php echo $cliente["documento"]; ?></td>
                             <td><?php echo $cliente["nombre"]; ?></td>
                             <td><?php echo $cliente["correo"]; ?></td>
