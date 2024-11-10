@@ -51,6 +51,8 @@ class Persona {
         $this->$propiedad = $valor;
     }
 
+    abstract public function imprimir();
+
 }
 
 class Socio extends Persona {
@@ -82,7 +84,9 @@ class Socio extends Persona {
         $this->bActivo = false;
     }
 
-    public function imprimir() {}
+    public function imprimir() {
+        echo "test";
+    }
 
 }
 
