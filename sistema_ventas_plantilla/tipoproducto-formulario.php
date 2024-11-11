@@ -1,54 +1,34 @@
 <?php
-
 include_once "config.php";
-include_once "entidades/cliente.php";
-include_once "entidades/venta.php";
-include_once "entidades/provincia.php";
-include_once "entidades/localidad.php";
+include_once "entidades/tipoproducto.php";
 
-$cliente = new Cliente();
-$cliente->cargarFormulario($_REQUEST);
+$tipoProducto = new TipoProducto();
 
-$pg = "Listado de clientes";
+if($_POST){
 
-if ($_POST) {
-    if (isset($_POST["btnGuardar"])) {
-        if (isset($_GET["id"]) && $_GET["id"] > 0) {
-            //Actualizo un cliente existente
-            $cliente->actualizar();
+    if(isset($_POST["btnGuardar"])){
+        $tipoProducto->cargarFormulario($_REQUEST);
+
+        if(isset($_GET["id"]) && $_GET["id"] > 0){
+            $tipoProducto->actualizar();
+            $msg["texto"] = "Actualizado correctamente";
+            $msg["codigo"] = "alert-success";
         } else {
-            //Es nuevo
-            $cliente->insertar();
-        }
-        $msg["texto"] = "Guardado correctamente";
-        $msg["codigo"] = "alert-success";
-
-    } else if (isset($_POST["btnBorrar"])) {
-        //Si existen ventas asociadas al cliente que se intenta eliminar, muestra mensaje de alerta
-        $venta = new Venta();
-        if ($venta->obtenerVentasPorCliente($cliente->idcliente)) {
-            $msg["texto"] = "No se puede eliminar un cliente con ventas asociadas.";
+            $tipoProducto->insertar();
+            $msg["texto"] = "Insertado correctamente";
             $msg["codigo"] = "alert-danger";
-        } else {
-            $cliente->eliminar();
-            header("Location: cliente-listado.php");
         }
+    } else if(isset($_POST["btnBorrar"])) {
+        $tipoProducto->cargarFormulario($_REQUEST);
+        $tipoProducto->eliminar();
+        header("Location: tipoproducto-listado.php");
     }
 }
 
-if (isset($_GET["do"]) && $_GET["do"] == "buscarLocalidad" && $_GET["id"] && $_GET["id"] > 0) {
-    $idProvincia = $_GET["id"];
-    $localidad = new Localidad();
-    $aLocalidad = $localidad->obtenerPorProvincia($idProvincia);
-    echo json_encode($aLocalidad);
-    exit;
+if(isset($_GET["id"]) && $_GET["id"] > 0){
+    $tipoProducto->cargarFormulario($_REQUEST);
+    $tipoProducto->obtenerPorId();
 }
-if (isset($_GET["id"]) && $_GET["id"] > 0) {
-    $cliente->obtenerPorId();
-}
-
-$provincia = new Provincia();
-$aProvincias = $provincia->obtenerTodos();
 
 include_once "header.php";
 ?>
@@ -68,7 +48,7 @@ include_once "header.php";
             <?php endif;?>
             <div class="row">
                 <div class="col-12 mb-3">
-                    <a href="cliente-listado.php" class="btn btn-primary mr-2">Listado</a>
+                    <a href="tipoproducto-listado.php" class="btn btn-primary mr-2">Listado</a>
                     <a href="cliente-formulario.php" class="btn btn-primary mr-2">Nuevo</a>
                     <button type="submit" class="btn btn-success mr-2" id="btnGuardar" name="btnGuardar">Guardar</button>
                     <button type="submit" class="btn btn-danger" id="btnBorrar" name="btnBorrar">Borrar</button>
@@ -77,7 +57,7 @@ include_once "header.php";
             <div class="row">
                 <div class="col-6 form-group">
                     <label for="txtNombre">Nombre:</label>
-                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="">
+                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $tipoProducto->nombre; ?>">
                 </div>
             </div>
 <script>
