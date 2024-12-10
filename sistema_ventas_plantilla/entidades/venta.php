@@ -26,7 +26,7 @@ class Venta
         return $this;
     }
 
-    /*public function cargarFormulario($request)
+    public function cargarFormulario($request)
     {
         $this->idcliente = isset($request["id"]) ? $request["id"] : "";
         $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
@@ -39,7 +39,7 @@ class Venta
         if (isset($request["txtAnioNac"]) && isset($request["txtMesNac"]) && isset($request["txtDiaNac"])) {
             $this->fecha_nac = $request["txtAnioNac"] . "-" . $request["txtMesNac"] . "-" . $request["txtDiaNac"];
         }
-    }*/
+    }
 
     public function insertar()
     {

@@ -21,20 +21,11 @@ class TipoProducto
         return $this;
     }
 
-    /*public function cargarFormulario($request)
+    public function cargarFormulario($request)
     {
-        $this->idcliente = isset($request["id"]) ? $request["id"] : "";
+        $this->idtipoproducto = isset($request["id"]) ? $request["id"] : "";
         $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
-        $this->cuit = isset($request["txtCuit"]) ? $request["txtCuit"] : "";
-        $this->telefono = isset($request["txtTelefono"]) ? $request["txtTelefono"] : "";
-        $this->correo = isset($request["txtCorreo"]) ? $request["txtCorreo"] : "";
-        $this->fk_idprovincia = isset($request["lstProvincia"]) ? $request["lstProvincia"] : "";
-        $this->fk_idlocalidad = isset($request["lstLocalidad"]) ? $request["lstLocalidad"] : "";
-        $this->domicilio = isset($request["txtDomicilio"]) ? $request["txtDomicilio"] : "";
-        if (isset($request["txtAnioNac"]) && isset($request["txtMesNac"]) && isset($request["txtDiaNac"])) {
-            $this->fecha_nac = $request["txtAnioNac"] . "-" . $request["txtMesNac"] . "-" . $request["txtDiaNac"];
-        }
-    }*/
+    }
 
     public function insertar()
     {

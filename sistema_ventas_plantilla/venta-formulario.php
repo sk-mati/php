@@ -100,8 +100,8 @@ include_once "header.php";
                     </select>
                 </div>
                 <div class="col-6 form-group">
-                    <label for="txtPrecio">Precio unitario:</label>
-                    <input type="number" class="form-control" name="txtPrecio" id="txtPrecio">
+                    <label for="txtPrecioUni">Precio unitario:</label>
+                    <input type="number" class="form-control" name="txtPrecioUni" id="txtPrecio">
                 </div>
                 <div class="col-6 form-group">
                     <label for="txtCantidad">Cantidad:</label>
