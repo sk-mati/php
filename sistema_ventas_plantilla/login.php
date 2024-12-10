@@ -12,7 +12,7 @@ if($_POST) {
   $clave = trim($_REQUEST["txtClave"]);
 
   if($usuario == "admin" && $clave == "admin123") {
-    $_SESSION["nombre"] = "Mati";
+    $_SESSION["nombre"] = "user";
     header("Location: index.php");
 } else {
   $msg = "Usuario o clave incorrecto.";
