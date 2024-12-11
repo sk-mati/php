@@ -2,6 +2,8 @@
 include_once "config.php";
 include_once "entidades/tipoproducto.php";
 
+$pg = "Tipo de productos";
+
 $tipoProducto = new TipoProducto();
 
 if($_POST){

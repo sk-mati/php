@@ -30,7 +30,11 @@ include_once("header.php");
             </tr>
             <?php foreach ($aProductos as $producto): ?>
               <tr>
-                  <td><img src="files/<?php echo $producto->imagen; ?>" class="img_thumbnail"></td>
+                  <td>
+                  <?php if($producto->imagen != ""): ?>
+                    <img src="img/<?php echo $producto->imagen; ?>" class="img-thumbnail">
+                  <?php endif; ?>
+                  </td>
                   <td><?php echo $producto->nombre; ?></td>
                   <td><?php echo $producto->cantidad; ?></td>
                   <td><?php echo number_format($producto->precio, 2, ",", "."); ?></td>

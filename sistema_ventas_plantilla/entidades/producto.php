@@ -28,18 +28,14 @@ class Producto
 
     public function cargarFormulario($request)
     {
-        $this->idcliente = isset($request["id"]) ? $request["id"] : "";
+        $this->idproducto = isset($request["id"]) ? $request["id"] : "";
         $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
-        $this->cuit = isset($request["txtCuit"]) ? $request["txtCuit"] : "";
-        $this->telefono = isset($request["txtTelefono"]) ? $request["txtTelefono"] : "";
-        $this->correo = isset($request["txtCorreo"]) ? $request["txtCorreo"] : "";
-        $this->fk_idprovincia = isset($request["lstProvincia"]) ? $request["lstProvincia"] : "";
-        $this->fk_idlocalidad = isset($request["lstLocalidad"]) ? $request["lstLocalidad"] : "";
-        $this->domicilio = isset($request["txtDomicilio"]) ? $request["txtDomicilio"] : "";
-        if (isset($request["txtAnioNac"]) && isset($request["txtMesNac"]) && isset($request["txtDiaNac"])) {
-            $this->fecha_nac = $request["txtAnioNac"] . "-" . $request["txtMesNac"] . "-" . $request["txtDiaNac"];
+        $this->cantidad = isset($request["txtCantidad"]) ? $request["txtCantidad"] : "";
+        $this->precio = isset($request["txtPrecio"]) ? $request["txtPrecio"] : "";
+        $this->descripcion = isset($request["txtDescripcion"]) ? $request["txtDescripcion"] : "";
+        $this->imagen = isset($request["imagen"]) ? $request["imagen"] : "";
+        $this->fk_idtipoproducto = isset($request["lstTipoProducto"]) ? $request["lstTipoProducto"] : "";
         }
-    }
 
     public function insertar()
     {
@@ -77,11 +73,11 @@ class Producto
 
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "UPDATE productos SET
-                nombre = '" . $this->nombre . "',
+                nombre = '$this->nombre',
                 cantidad = $this->cantidad,
                 precio = $this->precio,
-                descripcion = '" . $this->descripcion . "',
-                imagen =  '" . $this->imagen . "',
+                descripcion = '$this->descripcion',
+                imagen =  '$this->imagen',
                 fk_idtipoproducto = $this->fk_idtipoproducto
                 WHERE idproducto = $this->idproducto";
 
@@ -141,7 +137,7 @@ class Producto
                     precio,
                     descripcion,
                     imagen,
-                    fk_idtipoproducto,
+                    fk_idtipoproducto
                 FROM productos";
         if (!$resultado = $mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
