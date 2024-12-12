@@ -5,8 +5,8 @@ include_once "entidades/producto.php";
 
 $pg = "Listado de productos";
 
-$producto = new Producto ();
-$aProductos = $producto -> obtenerTodos();
+$producto = new Producto();
+$aProductos = $producto->obtenerTodos();
 
 include_once("header.php"); 
 ?>

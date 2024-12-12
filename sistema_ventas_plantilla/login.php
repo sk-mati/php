@@ -4,15 +4,18 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include_once "config.php";
-
-$claveEncriptada = password_hash("admin123", PASSWORD_DEFAULT);
+include_once "entidades/usuario.php";
 
 if($_POST) {
-  $usuario = trim($_REQUEST["txtUsuario"]);
+  $nombreUsuario = trim($_REQUEST["txtUsuario"]);
   $clave = trim($_REQUEST["txtClave"]);
 
-  if($usuario == "admin" && $clave == "admin123") {
-    $_SESSION["nombre"] = "Usuario";
+  //Si el usuario es admin y la clave es admin123
+  $entidadUsuario = new Usuario();
+  $entidadUsuario->obtenerPorUsuario($nombreUsuario);
+
+  if($entidadUsuario->usuario == $nombreUsuario && password_verify($clave, $entidadUsuario->clave)) {
+    $_SESSION["nombre"] = $entidadUsuario->nombre . " " . $entidadUsuario->apellido;
     header("Location: index.php");
 } else {
   $msg = "Usuario o clave incorrecto.";

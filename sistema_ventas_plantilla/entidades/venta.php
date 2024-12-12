@@ -9,6 +9,8 @@ class Venta
     private $cantidad;
     private $preciounitario;
     private $total;
+    private $nombre_cliente;
+    private $nombre_producto;
 
     public function __construct()
     {
@@ -28,17 +30,15 @@ class Venta
 
     public function cargarFormulario($request)
     {
-        $this->idcliente = isset($request["id"]) ? $request["id"] : "";
-        $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
-        $this->cuit = isset($request["txtCuit"]) ? $request["txtCuit"] : "";
-        $this->telefono = isset($request["txtTelefono"]) ? $request["txtTelefono"] : "";
-        $this->correo = isset($request["txtCorreo"]) ? $request["txtCorreo"] : "";
-        $this->fk_idprovincia = isset($request["lstProvincia"]) ? $request["lstProvincia"] : "";
-        $this->fk_idlocalidad = isset($request["lstLocalidad"]) ? $request["lstLocalidad"] : "";
-        $this->domicilio = isset($request["txtDomicilio"]) ? $request["txtDomicilio"] : "";
-        if (isset($request["txtAnioNac"]) && isset($request["txtMesNac"]) && isset($request["txtDiaNac"])) {
-            $this->fecha_nac = $request["txtAnioNac"] . "-" . $request["txtMesNac"] . "-" . $request["txtDiaNac"];
+        $this->idventa = isset($request["id"]) ? $request["id"] : "";
+        $this->fk_idcliente = isset($request["lstCliente"]) ? $request["lstCliente"] : "";
+        $this->fk_idproducto = isset($request["lstProducto"]) ? $request["lstProducto"] : "";
+        if (isset($request["txtAnio"]) && isset($request["txtMes"]) && isset($request["txtDia"])) {
+            $this->fecha = $request["txtAnio"] . "-" . $request["txtMes"] . "-" . $request["txtDia"] . "-" . $request["txtHora"];
         }
+        $this->cantidad = isset($request["txtCantidad"]) ? $request["txtCantidad"] : "";
+        $this->preciounitario = isset($request["txtPrecioUni"]) ? $request["txtPrecioUni"] : "";
+        $this->total = isset($request["txtTotal"]) ? $request["txtTotal"] : "";
     }
 
     public function insertar()
@@ -83,7 +83,7 @@ class Venta
                 cantidad = $this->cantidad,
                 preciounitario = $this->preciounitario,
                 total = $this->total
-                WHERE idventa = " . $this->idventa;
+                WHERE idventa = $this->idventa";
 
         if (!$mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -111,7 +111,7 @@ class Venta
                         fecha,
                         cantidad,
                         preciounitario,
-                        total,
+                        total
                 FROM ventas
                 WHERE idventa = $this->idventa";
         if (!$resultado = $mysqli->query($sql)) {
@@ -134,6 +134,41 @@ class Venta
         }
         $mysqli->close();
 
+    }
+
+    public function obtenerVentasPorCliente($idCliente)
+    {
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
+        $sql = "SELECT idventa,
+                        fk_idcliente,
+                        fk_idproducto,
+                        fecha,
+                        cantidad,
+                        preciounitario,
+                        total
+                FROM ventas
+                WHERE fk_idcliente = $idCliente";
+        if (!$resultado = $mysqli->query($sql)) {
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+        }
+
+        $aResultado = array();
+        if($resultado){
+            //Convierte el resultado en un array asociativo
+
+            while($fila = $resultado->fetch_assoc()){
+                $entidadAux = new Venta();
+                $entidadAux->idventa = $fila["idventa"];
+                $entidadAux->fk_idcliente = $fila["fk_idcliente"];
+                $entidadAux->fk_idproducto = $fila["fk_idproducto"];
+                $entidadAux->fecha = $fila["fecha"];
+                $entidadAux->cantidad = $fila["cantidad"];
+                $entidadAux->preciounitario = $fila["preciounitario"];
+                $entidadAux->total = $fila["total"];
+                $aResultado[] = $entidadAux;
+            }
+        }
+        return $aResultado;
     }
 
      public function obtenerTodos(){
@@ -174,5 +209,47 @@ class Venta
         return $aResultado;
     }
 
+    public function cargarGrilla() {
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
+
+        $sql = "SELECT
+                A.idventa,
+                A.fecha,
+                A.cantidad,
+                A.fk_idcliente,
+                B.nombre AS nombre_cliente,
+                A.fk_idproducto,
+                A.total,
+                A.preciounitario,
+                C.nombre AS nombre_producto
+                FROM ventas A
+                INNER JOIN clientes B ON A.fk_idcliente = B.idcliente
+                INNER JOIN productos C ON A.fk_idproducto = C.idproducto
+                ORDER BY A.fecha DESC";
+
+        if (!$resultado = $mysqli->query($sql)) {
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+        }
+
+        $aResultado = array();
+        if($resultado){
+            //Convierte el resultado en un array asociativo
+
+            while($fila = $resultado->fetch_assoc()){
+                $entidadAux = new Venta();
+                $entidadAux->idventa = $fila["idventa"];
+                $entidadAux->fk_idcliente = $fila["fk_idcliente"];
+                $entidadAux->fk_idproducto = $fila["fk_idproducto"];
+                $entidadAux->fecha = $fila["fecha"];
+                $entidadAux->cantidad = $fila["cantidad"];
+                $entidadAux->preciounitario = $fila["preciounitario"];
+                $entidadAux->nombre_cliente = $fila["nombre_cliente"];
+                $entidadAux->nombre_producto = $fila["nombre_producto"];
+                $entidadAux->total = $fila["total"];
+                $aResultado[] = $entidadAux;
+            }
+        }
+        return $aResultado;
+    }
 }
 ?>

@@ -2,54 +2,38 @@
 <?php
 
 include_once "config.php";
-include_once "entidades/cliente.php";
-include_once "entidades/venta.php";
-include_once "entidades/provincia.php";
-include_once "entidades/localidad.php";
+include_once "entidades/usuario.php";
 
-$cliente = new Cliente();
-$cliente->cargarFormulario($_REQUEST);
+$pg = "Edición de usuario";
 
-$pg = "Listado de clientes";
+$usuario = new Usuario();
 
-if ($_POST) {
-    if (isset($_POST["btnGuardar"])) {
-        if (isset($_GET["id"]) && $_GET["id"] > 0) {
-            //Actualizo un cliente existente
-            $cliente->actualizar();
+if($_POST){
+
+    if(isset($_POST["btnGuardar"])){
+        $usuario->cargarFormulario($_REQUEST);
+
+        if(isset($_GET["id"]) && $_GET["id"] > 0){
+            $usuario->actualizar();
+            $msg["texto"] = "Actualizado correctamente";
+            $msg["codigo"] = "alert-success";
         } else {
-            //Es nuevo
-            $cliente->insertar();
+            $usuario->insertar();
+            $msg["texto"] = "Insertado correctamente";
+            $msg["codigo"] = "alert-success";
         }
-        $msg["texto"] = "Guardado correctamente";
-        $msg["codigo"] = "alert-success";
-
-    } else if (isset($_POST["btnBorrar"])) {
-        //Si existen ventas asociadas al cliente que se intenta eliminar, muestra mensaje de alerta
-        $venta = new Venta();
-        if ($venta->obtenerVentasPorCliente($cliente->idcliente)) {
-            $msg["texto"] = "No se puede eliminar un cliente con ventas asociadas.";
-            $msg["codigo"] = "alert-danger";
-        } else {
-            $cliente->eliminar();
-            header("Location: cliente-listado.php");
-        }
+    } else if(isset($_POST["btnBorrar"])) {
+        $usuario->cargarFormulario($_REQUEST);
+        $usuario->eliminar();
+        header("Location: usuario-listado.php");
     }
 }
 
-if (isset($_GET["do"]) && $_GET["do"] == "buscarLocalidad" && $_GET["id"] && $_GET["id"] > 0) {
-    $idProvincia = $_GET["id"];
-    $localidad = new Localidad();
-    $aLocalidad = $localidad->obtenerPorProvincia($idProvincia);
-    echo json_encode($aLocalidad);
-    exit;
-}
-if (isset($_GET["id"]) && $_GET["id"] > 0) {
-    $cliente->obtenerPorId();
+if(isset($_GET["id"]) && $_GET["id"] > 0){
+    $usuario->cargarFormulario($_REQUEST);
+    $usuario->obtenerPorId();
 }
 
-$provincia = new Provincia();
-$aProvincias = $provincia->obtenerTodos();
 
 include_once "header.php";
 ?>
@@ -69,32 +53,32 @@ include_once "header.php";
             <?php endif;?>
             <div class="row">
                 <div class="col-12 mb-3">
-                    <a href="cliente-listado.php" class="btn btn-primary mr-2">Listado</a>
-                    <a href="cliente-formulario.php" class="btn btn-primary mr-2">Nuevo</a>
+                    <a href="usuario-listado.php" class="btn btn-primary mr-2">Listado</a>
+                    <a href="usuario-formulario.php" class="btn btn-primary mr-2">Nuevo</a>
                     <button type="submit" class="btn btn-success mr-2" id="btnGuardar" name="btnGuardar">Guardar</button>
                     <button type="submit" class="btn btn-danger" id="btnBorrar" name="btnBorrar">Borrar</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6 form-group">
-                    <label for="txtNombre">Usuario:</label>
-                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $cliente->nombre ?>">
+                    <label for="txtUsuario">Usuario:</label>
+                    <input type="text" required class="form-control" name="txtUsuario" id="txtUsuario" value="<?php echo $usuario->usuario ?>">
                 </div>
                 <div class="col-6 form-group">
-                    <label for="txtCuit">Nombre:</label>
-                    <input type="text" required class="form-control" name="txtCuit" id="txtCuit" value="<?php echo $cliente->cuit ?>" maxlength="11">
+                    <label for="txtNombre">Nombre:</label>
+                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $usuario->nombre ?>" maxlength="11">
                 </div>
                 <div class="col-6 form-group">
-                    <label for="txtCorreo">Apellido:</label>
-                    <input type="" class="form-control" name="txtCorreo" id="txtCorreo" required value="<?php echo $cliente->correo ?>">
+                    <label for="txtApellido">Apellido:</label>
+                    <input type="text" class="form-control" name="txtApellido" id="txtApellido" required value="<?php echo $usuario->apellido ?>">
                 </div>
                 <div class="col-6 form-group">
-                    <label for="txtTelefono">Correo:</label>
-                    <input type="number" class="form-control" name="txtTelefono" id="txtTelefono" value="<?php echo $cliente->telefono ?>">
+                    <label for="txtCorreo">Correo:</label>
+                    <input type="text" class="form-control" name="txtCorreo" id="txtCorreo" value="<?php echo $usuario->correo ?>">
                 </div>
                 <div class="col-6 form-group">
-                    <label for="txtTelefono">Clave:</label>
-                    <input type="number" class="form-control" name="txtTelefono" id="txtTelefono" value="<?php echo $cliente->telefono ?>">
+                    <label for="txtClave">Clave:</label>
+                    <input type="password" class="form-control" name="txtClave" id="txtClave" value="<?php echo $usuario->clave ?>">
                 </div>
 <script>
 </script>
