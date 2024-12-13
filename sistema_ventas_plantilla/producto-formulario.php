@@ -5,7 +5,7 @@ include_once "config.php";
 include_once "entidades/producto.php";
 include_once "entidades/tipoproducto.php";
 
-$pg = "Productos";
+$pg = "Edición de productos";
 
 $producto = new Producto();
 

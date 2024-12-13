@@ -3,7 +3,7 @@ include_once "config.php";
 include_once "entidades/tipoproducto.php";
 include_once "entidades/producto.php";
 
-$pg = "Tipo de productos";
+$pg = "Edición de tipo de productos";
 
 $tipoProducto = new TipoProducto();
 

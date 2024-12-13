@@ -7,7 +7,7 @@ include_once "entidades/venta.php";
 include_once "entidades/provincia.php";
 include_once "entidades/localidad.php";
 
-$pg = "Formulario de ventas";
+$pg = "Edición de ventas";
 
 $venta = new Venta();
 
