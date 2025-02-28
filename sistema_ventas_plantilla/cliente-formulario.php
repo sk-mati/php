@@ -134,7 +134,7 @@ include_once "header.php";
                     </div>
                     <div class="row panel-body p-3">
                         <div class="col-6 form-group">
-                            <label for="txtTelefono">Provincia:</label>
+                            <label>Provincia:</label>
                             <select class="form-control" name="lstProvincia" id="lstProvincia" onchange="fBuscarLocalidad()" required>
                                 <option value="" disabled selected>Seleccionar</option>
                                 <?php foreach ($aProvincias as $provincia): ?>
@@ -147,13 +147,13 @@ include_once "header.php";
                             </select>
                         </div>
                         <div class="col-6 form-group">
-                            <label for="txtTelefono">Localidad:</label>
+                            <label>Localidad:</label>
                             <select class="form-control" name="lstLocalidad" id="lstLocalidad" required>
                                 <option value="" disabled selected>Seleccionar</option>
                             </select>
                         </div>
                         <div class="col-12 form-group">
-                            <label for="txtTelefono">Dirección:</label>
+                            <label>Dirección:</label>
                             <input type="text" class="form-control" name="txtDomicilio" id="txtDomicilio" value="<?php echo $cliente->domicilio ?>">
                         </div>
                     </div>
