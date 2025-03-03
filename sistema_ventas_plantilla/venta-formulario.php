@@ -32,6 +32,18 @@ if($_POST){
     }
 }
 
+if(isset($_GET["do"]) && $_GET["do"] == "buscarProducto") {
+    $aResultado = array();
+    $idProducto = $_GET["id"];
+    $producto = new Producto();
+    $producto->idproducto = $idProducto;
+    $producto->obtenerPorId();
+    $aResultado["precio"] = $producto->precio;
+    $aResultado["cantidad"] = $producto->cantidad;
+    echo json_encode($aResultado);
+    exit;
+}
+
 if(isset($_GET["id"]) && $_GET["id"] > 0){
     $venta->cargarFormulario($_REQUEST);
     $venta->obtenerPorId();
@@ -117,7 +129,7 @@ include_once "header.php";
                 </div>
                 <div class="col-6 form-group">
                     <label for="lstProducto">Producto:</label>
-                    <select class="form-control selectpicker" name="lstProducto" id="lstProducto">
+                    <select class="form-control selectpicker" name="lstProducto" id="lstProducto" onchange="fBuscarPrecio();">
                         <option value="" disabled selected>Seleccionar</option>
                             <?php foreach($aProductos as $producto): ?>
                                 <?php if($producto->idproducto == $venta->fk_idproducto): ?>
@@ -130,17 +142,57 @@ include_once "header.php";
                 </div>
                 <div class="col-6 form-group">
                     <label for="txtPrecioUni">Precio unitario:</label>
-                    <input type="number" class="form-control" name="txtPrecioUni" id="txtPrecioUni" required>
+                    <input type="text" class="form-control" name="txtPrecioUni" id="txtPrecioUni" required>
                 </div>
                 <div class="col-6 form-group">
                     <label for="txtCantidad">Cantidad:</label>
-                    <input type="number" class="form-control" name="txtCantidad" id="txtCantidad" required>
+                    <input type="text" class="form-control" name="txtCantidad" id="txtCantidad" onchange="fCalcularTotal();" required>
                 </div>
                 <div class="col-6 form-group">
                     <label for="txtTotal">Total:</label>
-                    <input type="number" class="form-control" name="txtTotal" id="txtTotal" required>
+                    <input type="text" class="form-control" name="txtTotal" id="txtTotal" required>
                 </div>
             </div>
         </div>
 <script>
+
+    function fBuscarPrecio() {
+        let idProducto = $("#lstProducto option:selected").val();
+            $.ajax({
+                type: "GET",
+                url: "venta-formulario.php?do=buscarProducto",
+                data: { id:idProducto },
+                async: true,
+                dataType: "json",
+                success: function (respuesta) {
+                    let strResultado = Intl.NumberFormat("es-AR", {style: 'currency', currency: 'ARS'}).format(respuesta.precio);
+                    $("#txtPrecioUniCurrency").val(strResultado);
+                    $("#txtPrecioUni").val(respuesta.precio);
+                }
+            });
+    }
+
+    function fCalcularTotal() {
+        var idProducto = $("#lstProducto option:selected").val();
+        var cantidad = parseInt($('#txtCantidad').val());
+
+        $.ajax({
+            type: "GET",
+            url: "venta-formulario.php?do=buscarProducto",
+            data: { id:idProducto },
+            async: true,
+            dataType: "json",
+            success: function (respuesta) {
+                let resultado = 0;
+                if(cantidad <= parseInt(respuesta.cantidad)) {
+                    resultado = respuesta.precio *cantidad;
+                    $("#msgStock").hide();
+                } else {
+                    $("#msgStock").show();
+                }
+                strResultado = Intl.NumberFormat("es-AR", {style: currency, currency: 'ARS'}).format(respuesta.precio);
+                $("#txtTotal").val(strResultado);
+            }
+        });
+    }
 </script>
