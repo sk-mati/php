@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objeto Persona</title>
+</head>
+<script>
+    let persona1 = {
+        edad: 25,
+        nombre: "Matías",
+        apellido: "Sidoti Knap",
+        sexo: "Masculino",
+        estado_civil: "Soltero",
+        aPeliculas: ["Before", "Dead Poets Society", "Undine"],
+        cumplirAnios: function() {
+            console.log("He cumplido años.");
+            persona1.edad++;
+        },
+        saludar: function(saludo) {
+            console.log(saludo);
+        }
+    };
+    console.log(persona1);
+    persona1.saludar("Buenos días");
+    persona1.cumplirAnios();
+    console.log(persona1);
+</script>
+<body>
+<br><br><br>
+Crear un objeto llamado persona, que tenga las siguientes propiedades con valores predefinidos:
+edad(number), nombre(string), apellido(string), sexo(string), estado civil(string), peliculas favoritas(array de strings)
+Realizar un método cumplirAnios() que incrementa la edad en un año.
+persona1.edad++;
+Agregar un método saludar(saludo), que reciba un parámetro y lo muestre en consola.
+Finalmente ejecutar el siguiente código:
+console.log(persona1);
+persona1.saludar("Buenos días");
+persona1.cumplirAnios();
+console.log(persona1);
+</body>
+</html>
