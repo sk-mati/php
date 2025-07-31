@@ -1,0 +1,8 @@
+Datos de la variable ==>
+Este es un mensaje!
+Datos del array ==>
+8
+5
+7
+9
+10
